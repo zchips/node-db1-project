@@ -35,7 +35,7 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) =
 })
 
 router.put('/:id',checkAccountId, checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
-  console.log('Putting', req.body,"to", req.paramsid)
+  console.log('Putting', req.body,"to", req.params.id)
   Accounts.updateById(req.params.id, req.body).then(updated => {
     res.json(updated)
   }).catch(err => {
