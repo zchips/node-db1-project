@@ -17,9 +17,25 @@ if (typeof req.body.name === 'undefined'|| typeof req.body.budget === "undefined
 }
 
 exports.checkAccountNameUnique = (req, res, next) => {
-  // DO YOUR MAGIC
+  getByName(req.body.name.trim()).then(acc => {
+    console.log("acc:", acc)
+    if (acc) {
+      res.status(400).json({ message: "that name is taken" })
+    } else {
+      next()
+    }
+  })
 }
 
 exports.checkAccountId = (req, res, next) => {
-  // DO YOUR MAGIC
+  getById(req.params.id).then(acc => {
+    if (acc) {
+      next()
+    }
+    else {
+      res.status(404).json({ message: "account not found" })
+    }
+  }).catch(err => {
+    res.status(500).json({ message: "internal server error." });
+  })
 }
